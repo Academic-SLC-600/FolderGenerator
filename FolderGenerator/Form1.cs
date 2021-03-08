@@ -68,7 +68,6 @@ namespace FolderGenerator
                     workbook.SaveAs("TEMPLATE " + timestamp + " Import Job List.xlsx");
 
                     MessageBox.Show("Successfully download template");
-
                     Application.Restart();
                 }
             }
@@ -93,7 +92,7 @@ namespace FolderGenerator
 
         private void HandleExcelTemplate()
         {
-            List<String> headers = new List<string>() { "Initial", "Gen", "Course Code", "Course Name" };
+            List<string> headers = new List<string>() { "Initial", "Gen", "Course Code", "Course Name" };
 
             var workbook = new XLWorkbook(txtExcelPath.Text);
             var template = workbook.Worksheet(1).RowsUsed().First();
@@ -174,46 +173,40 @@ namespace FolderGenerator
             }
         }
 
+        private void CreateDirectory(Job job, string end)
+        {
+            string root = txtDestinationPath.Text + job.Type + "\\" + job.CourseCode + "-" + job.CourseName + "\\";
+            string readme = root + "ReadMe";
+            string target = root + job.Initial + job.Gen + "\\" + end;
+            if (!Directory.Exists(readme))
+            {
+                Directory.CreateDirectory(readme);
+            }
+            if (!Directory.Exists(target))
+            {
+                Directory.CreateDirectory(target);
+            }
+        }
+
         private void GenerateFolder()
         {
             if (cbGenerateType.SelectedIndex == 0)
             {
                 foreach (var item in Corrections)
                 {
-                    string root = txtDestinationPath.Text + item.Type + "\\" + item.CourseCode + "-" + item.CourseName + "\\";
-                    string readme = root + "ReadMe";
-                    string target = root + item.Initial + item.Gen + "\\" + item.Class;
-                    if (!Directory.Exists(readme))
-                    {
-                        Directory.CreateDirectory(readme);
-                    }
-                    if (!Directory.Exists(target))
-                    {
-                        Directory.CreateDirectory(target);
-                    }
+                    CreateDirectory(item, item.Class);
                 }
             }
             else
             {
                 foreach (var item in CaseMakings)
                 {
-                    string root = txtDestinationPath.Text + item.Type + "\\" + item.CourseCode + "-" + item.CourseName + "\\";
-                    string readme = root + "ReadMe";
-                    string target = root + item.Initial + item.Gen + "\\Var" + item.Var;
-                    if (!Directory.Exists(readme))
-                    {
-                        Directory.CreateDirectory(readme);
-                    }
-                    if (!Directory.Exists(target))
-                    {
-                        Directory.CreateDirectory(target);
-                    }
+                    CreateDirectory(item, "Var" + item.Var);
                 }
             }
 
-            Application.Restart();
-
             MessageBox.Show("Successfully generate folder");
+            Application.Restart();
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)

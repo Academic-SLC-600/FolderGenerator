@@ -29,6 +29,7 @@ namespace FolderGenerator
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FolderGenerator));
             this.btnDownload = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbType = new System.Windows.Forms.ComboBox();
@@ -186,6 +187,7 @@ namespace FolderGenerator
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FolderGenerator";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
